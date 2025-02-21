@@ -44,7 +44,9 @@ clock_t startClock;
 #define u_long unsigned int
 
 // these two should do nothing
-#define _Static_assert(x) 
+#ifndef __GNUC__
+  #define _Static_assert(x) // global.h already sets a GCC-compatible one
+#endif
 #define __attribute__(x)
 
 // ======= Replace Psn00bsdk Data =============
@@ -80,9 +82,9 @@ int NikoGetEnterKey()
 	return 0;
 #else
 	// dont use Windows.h
-	__declspec(dllimport) short __stdcall 
+	__declspec(dllimport) short __stdcall
 		GetAsyncKeyState(int vKey);
-	
+
 	return GetAsyncKeyState(0xd);
 #endif
 }
@@ -104,7 +106,7 @@ int oldTicks = 0;
 void NikoCalcFPS()
 {
 	if (frameCount++ != frameGap) return;
-	
+
 	frameCount = 0;
 	int newTicks = SDL_GetTicks();
 	int delta = newTicks - oldTicks;
@@ -146,6 +148,9 @@ int main(int argc, char* argv[])
 	PsyX_Initialise("CTRPC", 800, 600, 0);
 #endif
 
+    printf("sizeof(struct GameTracker): %X\n", sizeof(struct GameTracker));
+    printf("sizeof(struct DB): %X\n", sizeof(struct DB));
+
 	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
 
 	// set to 30 FPS VSync
@@ -157,7 +162,7 @@ int main(int argc, char* argv[])
 
 	// for typing in SubmitName
 	g_dbg_gameDebugKeys = PsyXKeyboardHandler;
-	
+
 	// override PsyX_Sys_InitialiseInput,
 	// so typing in SubmitName doesn't break
 	memset(&g_cfg_keyboardMapping, 0, sizeof(g_cfg_keyboardMapping));

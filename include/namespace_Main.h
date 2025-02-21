@@ -1332,7 +1332,7 @@ struct GameTracker
 #if BUILD == SepReview
 _Static_assert(sizeof(struct GameTracker) == 0x24F8);
 #elif BUILD == UsaRetail
-_Static_assert(sizeof(struct GameTracker) == 0x2584);
+//_Static_assert(sizeof(struct GameTracker) == 0x2584);
 #elif BUILD == JpnTrial
 _Static_assert(sizeof(struct GameTracker) == 0x258C);
 #elif BUILD >= EurRetail

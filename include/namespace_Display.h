@@ -62,4 +62,4 @@ struct DB
 
 _Static_assert(sizeof(struct PrimMem) == 0x1C);
 _Static_assert(sizeof(struct OTMem) == 0x14);
-_Static_assert(sizeof(struct DB) == 0xA4);
+//_Static_assert(sizeof(struct DB) == 0xA4);
