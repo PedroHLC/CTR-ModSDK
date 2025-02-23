@@ -26,32 +26,35 @@
             };
           };
 
-          mkOnline = withDebug: {
+          mkOnline = path: withDebug: {
             native = {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             native32 = with pkgs32; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             aarch64 = with pkgsAarch64; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             arm32 = with pkgsARM32; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             mingwW64 = with pkgsCross.mingwW64; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
             };
             mingw32 = with pkgsCross.mingw32; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
+              gcc = callPackage path { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage path { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
             };
           };
+
+          mkOnlineServer = mkOnline ./mods/Windows/OnlineCTR/Network_PC/Server;
+          mkOnlineClient = mkOnline ./mods/Windows/OnlineCTR/Network_PC/Client;
         in
         rec {
           pc-retail = {
@@ -63,8 +66,12 @@
             debug = mkCTR true true;
           };
           online-server = {
-            release = mkOnline false;
-            debug = mkOnline true;
+            release = mkOnlineServer false;
+            debug = mkOnlineServer true;
+          };
+          online-client = {
+            release = mkOnlineClient false;
+            debug = mkOnlineClient true;
           };
         };
     })

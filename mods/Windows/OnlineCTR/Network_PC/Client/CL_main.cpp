@@ -1,3 +1,10 @@
+#ifdef __GNUC__
+  #define _UNICODE
+  #define UNICODE
+  #include <tchar.h>
+  #define swprintf _snwprintf
+#endif
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 

@@ -45,7 +45,7 @@ clock_t startClock;
 
 // these two should do nothing
 #ifndef __GNUC__
-  #define _Static_assert(x) // global.h already sets a GCC-compatible one
+  #define _Static_assert(x)
 #endif
 #define __attribute__(x)
 
