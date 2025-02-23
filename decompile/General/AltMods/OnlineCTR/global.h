@@ -12,9 +12,10 @@
 
 	#ifdef WINDOWS_INCLUDE
 		#include <unistd.h> // for the 'usleep()' function
+		#define STATIC_ASSERT2 static_assert
+	#else
+		#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
 	#endif
-
-	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
 
 #else // MSVC (Visual Studio)
 

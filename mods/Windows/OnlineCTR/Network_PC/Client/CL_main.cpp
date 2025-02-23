@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <Psapi.h>
+#include <psapi.h>
 //#include <chrono>
 //#include <thread>
 
